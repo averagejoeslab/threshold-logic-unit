@@ -1,7 +1,11 @@
 """
 threshold-logic-unit
-A minimal, faithful replication of McCulloch & Pitts (1943),
-"A Logical Calculus of the Ideas Immanent in Nervous Activity."
+A minimal, faithful replication of the McCulloch-Pitts neuron.
+
+Paper:  Warren S. McCulloch & Walter Pitts (1943).
+        "A Logical Calculus of the Ideas Immanent in Nervous Activity."
+        The Bulletin of Mathematical Biophysics, 5(4):115-133.
+        https://doi.org/10.1007/BF02478259
 
 One neuron, four ideas, in the smallest form that stays true to the paper.
 Run:  python tlu.py

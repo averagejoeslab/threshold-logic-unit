@@ -93,6 +93,29 @@ python tlu.py
 
 No dependencies. It prints the truth tables for AND / OR / NOT / XOR and a memory timeline, and checks every result against what the paper says.
 
+## Original paper
+
+Everything in this repo is a reconstruction of:
+
+> Warren S. McCulloch & Walter Pitts (1943). *A Logical Calculus of the Ideas Immanent in Nervous Activity.* The Bulletin of Mathematical Biophysics **5**(4):115–133. <https://doi.org/10.1007/BF02478259>
+
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@article{mcculloch1943logical,
+  title   = {A logical calculus of the ideas immanent in nervous activity},
+  author  = {McCulloch, Warren S. and Pitts, Walter},
+  journal = {The Bulletin of Mathematical Biophysics},
+  volume  = {5},
+  number  = {4},
+  pages   = {115--133},
+  year    = {1943},
+  doi     = {10.1007/BF02478259}
+}
+```
+</details>
+
 ---
 
 *Educational reconstruction by [Average Joes Lab](https://averagejoeslab.com). All credit for the ideas to McCulloch & Pitts (1943).*
