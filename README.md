@@ -2,7 +2,7 @@
 
 The paper that **created the first artificial neuron** — reproduced in modern Python and **plotted** so you can *see* each idea. It's a simple paper reproduction *and* a gentle primer in **computational modeling of neuroscience**: watch a biological neuron get turned into a few lines of math.
 
-> Warren S. McCulloch & Walter Pitts (1943). *A Logical Calculus of the Ideas Immanent in Nervous Activity.* Bulletin of Mathematical Biophysics 5:115–133. [doi:10.1007/BF02478259](https://doi.org/10.1007/BF02478259)
+> Warren S. McCulloch & Walter Pitts (1943). *A Logical Calculus of the Ideas Immanent in Nervous Activity.* The Bulletin of Mathematical Biophysics **5**(4):115–133. [doi:10.1007/BF02478259](https://doi.org/10.1007/BF02478259)
 
 The whole idea fits in **one neuron**, built up **one idea at a time** in a runnable notebook ([`neuron.ipynb`](./neuron.ipynb)) whose outputs and plots are saved so you can read it like a story.
 
@@ -31,7 +31,7 @@ Part for part, the biology maps straight onto the code:
 | Action potential (all-or-none) | a full spike, or nothing at all | returns `1` or `0` |
 | Axon | carries the output onward | the function's return value |
 
-**Modeling means keeping what matters and idealizing the rest.** McCulloch & Pitts made three big simplifications: every input counts equally (no varying synapse strengths), inhibition is absolute (one inhibitor always wins), and time runs in discrete ticks. Those choices are exactly what turn a messy biological cell into a clean piece of **logic** — and that act of rewriting a biological mechanism as something computable is the heart of computational neuroscience.
+**Modeling means keeping what matters and idealizing the rest.** McCulloch & Pitts made a few deliberate simplifications: signals are **all-or-none** (no graded strengths), inputs are combined by **plain counting** with **no tunable, real-valued weights** (those arrive 15 years later, with the perceptron), **inhibition is absolute** (one inhibitor always wins), and **time runs in discrete ticks**. Those choices are exactly what turn a messy biological cell into a clean piece of **logic** — and that act of rewriting a biological mechanism as something computable is the heart of computational neuroscience.
 
 > Because it applies a **threshold** to a **linear** sum of its inputs, this artificial neuron is also called a **threshold logic unit (TLU)** or a **linear threshold unit (LTU)**. *McCulloch–Pitts neuron, artificial neuron, TLU, LTU* — four names for the same object. The rest of this repo builds it.
 
@@ -108,6 +108,8 @@ For **AND** and **OR** one line cleanly splits the firing cases from the silent 
 ```
 
 (McCulloch & Pitts prove this works for *every* logical expression — Theorems I & II.)
+
+> **A note on history.** The "*a single neuron can't do XOR — it isn't linearly separable*" way of seeing the limit came **later** (Minsky & Papert, 1969). What McCulloch & Pitts themselves proved in 1943 is the half that fixes it — that a *network* of these neurons can realize **any** logical expression (their Theorems I & II). We borrow the linear-separability picture only because it makes *why* you need a network easy to see.
 
 ## 5. Loop it → memory
 
