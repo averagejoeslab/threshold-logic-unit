@@ -16,9 +16,23 @@ McCulloch & Pitts noticed that "this neuron fired" is therefore just a **true / 
 
 That's the entire paper in one sentence. Everything below unpacks it — one step at a time.
 
+### Words to know
+
+- **all-or-none** — a neuron is either fully *firing* (`1`) or *silent* (`0`); nothing in between.
+- **threshold** — how many active inputs it takes to make the neuron fire.
+- **excitatory input** — an input that pushes the neuron *toward* firing (it gets counted).
+- **inhibitory input** — an input that *vetoes* firing (one active inhibitor is enough to silence it).
+- **linearly separable** — a problem you can solve by drawing one straight line between the “yes” and “no” cases. A single neuron can only do these.
+
 ## 1. The simplest possible neuron
 
 Start with the least a neuron could do: **add up its inputs, and fire if the total is big enough.** That cutoff is the **threshold**. No weights, no learning — just counting.
+
+```
+   input ─┐
+   input ─┼─►( add them up )─► total ≥ threshold ? ─► fire: 1 or 0
+   input ─┘
+```
 
 ```python
 def neuron(inputs, threshold):
@@ -44,7 +58,16 @@ def OR(a, b):  return neuron([a, b], threshold=1)   # fires if EITHER is on
 
 Try to build **NOT** — "fire when the input is *off*." You can't: adding inputs only ever pushes a neuron *toward* firing, never away from it.
 
-So the model adds a second kind of input — an **inhibitory** one. In 1943 it's *absolute*: **a single inhibitory signal vetoes firing entirely**, no matter the total. That's the one piece we add:
+So the model adds a second kind of input — an **inhibitory** one. In 1943 it's *absolute*: **a single inhibitory signal vetoes firing entirely**, no matter the total.
+
+```
+   excitatory ─┐
+   excitatory ─┼─►( add up )─► total ≥ threshold ?
+   excitatory ─┘                       │
+                                       ▼
+   inhibitory ─────────────────► veto ─► fire: 1 or 0
+                              (any inhibitor on  ⇒  always 0)
+```
 
 ```python
 def neuron(inputs, threshold, inhibited=False):
@@ -64,21 +87,43 @@ Two things surprise modern readers: **no weights** (it just *counts* — weighte
 
 ## 4. Wire gates into a network → *any* logic (XOR)
 
-One neuron has a famous limit: it **cannot** compute **XOR** ("one or the other, but not both"). XOR isn't *linearly separable* — no single threshold splits its true cases from its false ones.
-
-The paper's first big result fixes this: **wire neurons together and you can build any logic at all.**
+One neuron has a famous limit: it **cannot** compute **XOR** ("one or the other, but not both"). Here's *why*. Plot the four inputs, mark each output, and try to fence the `1`s off from the `0`s with **one straight line**:
 
 ```
-a XOR b  =  (a OR b)  AND  NOT(a AND b)
+         AND                          XOR
+  b=1 |  0    1             b=1 |  1    0
+  b=0 |  0    0             b=0 |  0    1
+      +----------                +----------
+        a=0  a=1                   a=0  a=1
+
+  one line fences off          the 1s sit on a DIAGONAL —
+  the single 1   ✓             no single straight line works  ✗
+```
+
+That diagonal is what "not linearly separable" means. The paper's first big result fixes it: **wire neurons together and you can build any logic at all.**
+
+```
+   a ─┬───────────────► OR(a,b) ───────────────┐
+      │                                          ├─► AND ─► XOR
+   b ─┴─► AND(a,b) ─► NOT(AND(a,b)) ─────────────┘
+
+   XOR = AND( OR(a, b) , NOT(AND(a, b)) )
 ```
 
 Three gates we already built, wired into one little network. (McCulloch & Pitts prove this works for *every* logical expression — Theorems I & II.)
 
 ## 5. Loop it → memory
 
-So far everything flows forward. Now **feed a neuron's output back into itself.**
+So far everything flows forward. Now **feed a neuron's output back into itself** — that loop is what lets it *remember*.
 
 Once you "set" it, it keeps re-triggering itself — it **reverberates** — so it *remembers* that it was switched on, until something "resets" (inhibits) it. The authors call such a firing "a memory — or an idea."
+
+```
+        ┌────────── feedback: its own previous output ──────────┐
+        │                                                       │
+   set ─┴─►[ neuron: fire if sum ≥ 1 ]──────────────────────────┴─► state
+   reset ───► (inhibits  ⇒  clears to 0)
+```
 
 This is the paper's second half ("nets with circles"), and it is how the network gains **state**. (They even show this looping trick can stand in for *learning* — Theorem VII.)
 
@@ -90,9 +135,17 @@ Put it together and a network of these neurons is exactly a **finite-state machi
 
 In other words: **network + an external memory tape = a universal computer.** This paper is the bridge from *brains* to *computers* — written in 1943, before either modern neuroscience or the digital computer existed.
 
-## Why it still matters
+## Where this sits
 
-This is the **ancestor of every neural network.** The next step in the story is [Rosenblatt's perceptron (1958)](https://doi.org/10.1037/h0042519): take this neuron, **add tunable weights and a learning rule**, and it can now *learn from data* instead of being wired by hand. That one change starts machine learning.
+This repo is **rung 1** of the neural-network story — a neuron you *wire by hand*. Each later step adds one capability:
+
+| Step | What's added | Can it learn? |
+|------|--------------|---------------|
+| **McCulloch–Pitts (1943)** — *this repo* | counting + threshold + inhibition | **No** — wired by hand |
+| **Rosenblatt's perceptron (1958)** | tunable **weights** + a learning rule | learns linear boundaries |
+| **Backprop / autograd** (e.g. micrograd) | gradients across **many layers** | learns almost anything (deep nets) |
+
+The next rung is [Rosenblatt's perceptron (1958)](https://doi.org/10.1037/h0042519): take this neuron, **add tunable weights and a learning rule**, and it can *learn from data* instead of being wired by hand. That one change starts machine learning.
 
 ## Run it
 
