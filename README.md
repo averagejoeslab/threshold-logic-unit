@@ -4,7 +4,7 @@ A tiny, faithful replication of the paper that **invented the artificial neuron*
 
 > Warren S. McCulloch & Walter Pitts (1943). *A Logical Calculus of the Ideas Immanent in Nervous Activity.* Bulletin of Mathematical Biophysics 5:115–133. [doi:10.1007/BF02478259](https://doi.org/10.1007/BF02478259)
 
-The whole idea fits in **one neuron and ~30 lines of Python** ([`tlu.py`](./tlu.py)). This README walks the paper's arc in plain language — the math included.
+The whole idea fits in **one neuron**, demonstrated cell-by-cell in a runnable notebook ([`tlu.ipynb`](./tlu.ipynb)) whose outputs are saved so you can read it like a story. This README walks the paper's arc in plain language — the math included.
 
 ---
 
@@ -87,11 +87,14 @@ This is the **ancestor of every neural network.** The next step in the story is 
 
 ## Run it
 
+Open the notebook and run the cells top to bottom:
+
 ```bash
-python tlu.py
+pip install jupyter
+jupyter notebook tlu.ipynb
 ```
 
-No dependencies. It prints the truth tables for AND / OR / NOT / XOR and a memory timeline, and checks every result against what the paper says.
+The outputs are already saved in the notebook, so you can also just **read it rendered on GitHub** — every cell shows its result. It builds one neuron, then demonstrates AND / OR / NOT / XOR and a memory loop, and self-checks every result against the paper. Only the Python standard library is used in the cells.
 
 ## Original paper
 
