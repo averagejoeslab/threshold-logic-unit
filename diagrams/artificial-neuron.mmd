@@ -1,0 +1,6 @@
+flowchart LR
+  I([inputs<br/>each 0 or 1]) --> Sum[sum the inputs]
+  Sum --> Th{total ≥ threshold?}
+  Th -->|yes| Fire[return 1: fire]
+  Th -->|no| Silent[return 0: silent]
+  Inh([inhibitory input]) -. forces 0 .-> Th

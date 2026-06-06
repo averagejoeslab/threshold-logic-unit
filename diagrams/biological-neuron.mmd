@@ -1,0 +1,7 @@
+flowchart LR
+  In([signals from<br/>other neurons]) --> Dend[Dendrites<br/>receive them]
+  Dend --> Soma[Soma<br/>adds them up]
+  Soma --> Hill{Axon hillock<br/>strong enough?}
+  Hill -->|yes| Spike[Axon fires an<br/>all-or-none spike]
+  Hill -->|no| Quiet[stays silent]
+  Inh([inhibitory<br/>synapse]) -. blocks .-> Hill

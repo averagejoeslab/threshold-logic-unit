@@ -12,28 +12,13 @@ The whole idea fits in **one neuron**, built up **one idea at a time** in a runn
 
 McCulloch & Pitts started with the **biological neuron**. A neuron collects signals from other neurons through its **dendrites**, the **soma** (cell body) adds those signals together, and if the total is strong enough to cross a threshold at the **axon hillock**, the neuron "fires" an **all-or-none** spike down its **axon** to the next neurons. Some incoming connections are **excitatory** (push it toward firing); others are **inhibitory** (hold it back).
 
-```mermaid
-flowchart LR
-    In([signals from<br/>other neurons]) --> Dend[Dendrites<br/>receive them]
-    Dend --> Soma[Soma<br/>adds them up]
-    Soma --> Hill{Axon hillock<br/>strong enough?}
-    Hill -->|yes| Spike[Axon fires an<br/>all-or-none spike]
-    Hill -->|no| Quiet[stays silent]
-    Inh([inhibitory<br/>synapse]) -. blocks .-> Hill
-```
+![A biological neuron: dendrites receive signals, the soma sums them, and if the total crosses the axon hillock's threshold the axon fires an all-or-none spike; an inhibitory synapse can block it.](images/biological-neuron.png)
 
 ## Modeling it: the first artificial neuron
 
 Their insight: because a neuron is **all-or-none** (it fires or it doesn't), you can capture what it *does* in pure logic. Strip the biology down to its essentials and you get an **artificial neuron** — the same shape, now as something you can compute:
 
-```mermaid
-flowchart LR
-    I([inputs<br/>each 0 or 1]) --> Sum[sum the inputs]
-    Sum --> Th{total ≥ threshold?}
-    Th -->|yes| Fire[return 1 — fire]
-    Th -->|no| Silent[return 0 — silent]
-    Inh([inhibitory input]) -. forces 0 .-> Th
-```
+![The artificial neuron: inputs are summed, and if the total reaches the threshold it returns 1 (fire) else 0 (silent); an inhibitory input forces 0.](images/artificial-neuron.png)
 
 Part for part, the biology maps straight onto the code:
 
