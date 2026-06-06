@@ -87,20 +87,11 @@ Two things surprise modern readers: **no weights** (it just *counts* — weighte
 
 ## 4. Wire gates into a network → *any* logic (XOR)
 
-One neuron has a famous limit: it **cannot** compute **XOR** ("one or the other, but not both"). Here's *why*. Plot the four inputs, mark each output, and try to fence the `1`s off from the `0`s with **one straight line**:
+One neuron has a famous limit: it **cannot** compute **XOR** ("one or the other, but not both"). Here's *why*. Each panel plots the four inputs, marked by output (filled = fires, hollow = silent). For a single neuron the only question is: **can one straight line fence the `1`s off from the `0`s?**
 
-```
-         AND                          XOR
-  b=1 |  0    1             b=1 |  1    0
-  b=0 |  0    0             b=0 |  0    1
-      +----------                +----------
-        a=0  a=1                   a=0  a=1
+![AND and OR are separable by a single straight line; XOR's 1s sit on a diagonal, so no single line works](images/linear-separability.png)
 
-  one line fences off          the 1s sit on a DIAGONAL —
-  the single 1   ✓             no single straight line works  ✗
-```
-
-That diagonal is what "not linearly separable" means. The paper's first big result fixes it: **wire neurons together and you can build any logic at all.**
+For **AND** and **OR**, one line cleanly splits the firing cases from the silent ones — that's all a single neuron can do. **XOR**'s `1`s sit on a **diagonal**, so no single line works; that's what "not linearly separable" means. The paper's first big result fixes it: **wire neurons together and you can build any logic at all.**
 
 ```
    a ─┬───────────────► OR(a,b) ───────────────┐
@@ -152,11 +143,11 @@ The next rung is [Rosenblatt's perceptron (1958)](https://doi.org/10.1037/h00425
 Open the notebook and run the cells top to bottom:
 
 ```bash
-pip install jupyter
+pip install jupyter matplotlib
 jupyter notebook tlu.ipynb
 ```
 
-The outputs are already saved in the notebook, so you can also just **read it rendered on GitHub** — every cell shows its result. It builds the neuron up step by step (AND / OR / NOT / XOR and a memory loop) and self-checks every result against the paper. Only the Python standard library is used in the cells.
+The outputs are already saved in the notebook, so you can also just **read it rendered on GitHub** — every cell shows its result, including the plot. It builds the neuron up step by step (AND / OR / NOT / XOR and a memory loop) and self-checks every result against the paper. The cells use only the Python standard library plus **matplotlib** (for the one linear-separability plot).
 
 ## Original paper
 
